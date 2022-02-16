@@ -1,8 +1,10 @@
+import { pubSub } from "../shared/pubSub.js";
 import ArticuleListService from "./ArticuleListService.js";
 import {
   buildArticuleDetailView,
   buildArticuleView,
   buildArticuleListSpinnerView,
+  buildNotFoundArticulesView,
 } from "./ArticuleListView.js";
 
 export class ArticuleListController {
@@ -22,7 +24,7 @@ export class ArticuleListController {
       articules = await ArticuleListService.getArticules();
 
       if (articules.length === 0) {
-        console.log("There aren't any articules");
+        this.articuleListElement.innerHTML = buildNotFoundArticulesView();
       }
 
       for (const articule of articules) {
@@ -33,6 +35,10 @@ export class ArticuleListController {
         this.articuleListElement.appendChild(articuleDivElement);
       }
     } catch (error) {
+      pubSub.publish(
+        pubSub.TOPICS.SHOW_ERROR_NOTIFICATION,
+        "Error getting articules"
+      );
     } finally {
       const loader = this.articuleListElement.querySelector(".loader");
       loader.remove();

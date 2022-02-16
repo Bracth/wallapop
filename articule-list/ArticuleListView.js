@@ -33,3 +33,9 @@ export function buildArticuleListSpinnerView() {
     <div></div>
   </div>`;
 }
+
+export function buildNotFoundArticulesView() {
+  return `
+    <h1>Ooops!!! no hay ningún tweet!!! =(</h1>
+  `;
+}

@@ -1,6 +1,8 @@
 export default {
   async getArticules() {
     const url = "http://localhost:8000/api/articules";
+    const badUrl =
+      "https://hds.hel.fi/static/assets/placeholders/image/image-m@3x.png";
 
     let response;
     let articules;
