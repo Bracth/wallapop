@@ -1,4 +1,4 @@
-import { NotificationController } from "../shared/notification/NotificationContoller.js";
+import { NotificationController } from "../shared/notification/NotificationController.js";
 import { ArticuleListController } from "./ArticuleListController.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
