@@ -9,7 +9,7 @@ export function buildArticuleDetailView(articule) {
   if (articule.isSelling) {
     isSelling = "Selling";
   } else {
-    isSelling = "Looking";
+    isSelling = "Buying";
   }
 
   const articuleTemplate = `
