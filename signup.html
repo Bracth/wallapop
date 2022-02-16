@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="./shared/spinner/spinner.css">
+    <link rel="stylesheet" href="./shared/notification/notification.css">
+</head>
+
+<body>
+    <section class="notification"></section>
+    <form>
+        <div>
+            <label for="user">User: </label>
+            <input type="text"  name="user"  id="user" required>
+        </div>
+        <div>
+            <label for="password">Password: </label>
+            <input id="password" type="password" name="password" required>
+        </div>
+        <div>
+            <label for="password">Password: </label>
+            <input id="matchPassword" type="password" name="matchPassword" required>
+        </div>
+
+        <button type="submit" disabled>Sign Up</button>
+    </form>
+
+    <script type="module" src="./signup/signup.js"></script>
+</body>
+
+</html>

@@ -1,5 +1,26 @@
-class SingupService {
+class SignupService {
   constructor() {}
+
+  async createUser(username, password) {
+    const body = {
+      username,
+      password,
+    };
+
+    const response = await fetch("http://localhost:8000/auth/register", {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json;
+
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+  }
 
   async loginUser(username, password) {
     const body = {
@@ -27,4 +48,4 @@ class SingupService {
   }
 }
 
-export const singupService = new SingupService();
+export const signupService = new SignupService();

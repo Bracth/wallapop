@@ -1,5 +1,5 @@
 import { pubSub } from "../shared/pubSub.js";
-import { singupService } from "../singup/SingupService.js";
+import { signupService } from "../signup/SignupService.js";
 
 export class LoginController {
   constructor(loginFormElement) {
@@ -52,7 +52,7 @@ export class LoginController {
 
   async loginUser(username, password) {
     try {
-      await singupService.loginUser(username, password);
+      await signupService.loginUser(username, password);
       window.location.href = "/";
     } catch (error) {
       pubSub.publish(pubSub.TOPICS.SHOW_ERROR_NOTIFICATION, error);
