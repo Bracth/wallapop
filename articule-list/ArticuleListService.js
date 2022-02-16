@@ -28,6 +28,33 @@ export default {
     return transformArticules;
   },
 
+  async getArticule(articuleId) {
+    const url = `http://localhost:8000/api/articules/${articuleId}`;
+
+    let response;
+    let articule;
+
+    try {
+      response = await fetch(url);
+    } catch (error) {
+      throw new Error("I was unable to go for the articule");
+    }
+
+    if (!response.ok) {
+      throw new Error("Articule not found");
+    }
+
+    try {
+      articule = await response.json();
+    } catch (error) {
+      throw new Error("I was unable to transform the response to json");
+    }
+
+    const transformedArticule = this.transformArticules([articule]);
+
+    return transformedArticule[0];
+  },
+
   transformArticules(articules) {
     return articules.map((articule) => {
       const transformedArticule = {
