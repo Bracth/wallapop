@@ -46,6 +46,10 @@ class SignupService {
 
     localStorage.setItem("jwt", token);
   }
+
+  getLoggedUser() {
+    return localStorage.getItem("jwt") || null;
+  }
 }
 
 export const signupService = new SignupService();

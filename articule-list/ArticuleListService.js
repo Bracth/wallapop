@@ -1,3 +1,5 @@
+import { signupService } from "../signup/SignupService.js";
+
 export default {
   async getArticules() {
     const url = "http://localhost:8000/api/articules";
@@ -53,6 +55,27 @@ export default {
     const transformedArticule = this.transformArticules([articule]);
 
     return transformedArticule[0];
+  },
+
+  async deleteArticule(articuleId) {
+    const url = `http://localhost:8000/api/articules/${articuleId}`;
+
+    let response;
+
+    try {
+      response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + signupService.getLoggedUser(),
+        },
+      });
+    } catch (error) {
+      throw new Error("I was unale to delete the articule");
+    }
+
+    if (!response.ok) {
+      throw new Error("Articule not found");
+    }
   },
 
   transformArticules(articules) {
