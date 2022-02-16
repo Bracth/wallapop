@@ -1,5 +1,12 @@
 export function buildArticuleView(articule) {
   const articuleDetailView = buildArticuleDetailView(articule);
+  let articuleTemplate = `
+    <a href="/articuleDetail.html?id=${articule.id}">
+      ${articuleDetailView}
+    </a>
+  `;
+
+  return articuleTemplate;
 }
 
 export function buildArticuleDetailView(articule) {

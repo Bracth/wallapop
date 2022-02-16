@@ -29,7 +29,7 @@ export class ArticuleListController {
 
       for (const articule of articules) {
         const articuleDivElement = document.createElement("div");
-        const articuleTemplate = buildArticuleDetailView(articule);
+        const articuleTemplate = buildArticuleView(articule);
 
         articuleDivElement.innerHTML = articuleTemplate;
         this.articuleListElement.appendChild(articuleDivElement);
