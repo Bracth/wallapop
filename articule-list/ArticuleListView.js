@@ -24,3 +24,12 @@ export function buildArticuleDetailView(articule) {
 
   return articuleTemplate;
 }
+
+export function buildArticuleListSpinnerView() {
+  return `<div class="loader">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>`;
+}

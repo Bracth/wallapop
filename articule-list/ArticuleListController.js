@@ -2,6 +2,7 @@ import ArticuleListService from "./ArticuleListService.js";
 import {
   buildArticuleDetailView,
   buildArticuleView,
+  buildArticuleListSpinnerView,
 } from "./ArticuleListView.js";
 
 export class ArticuleListController {
@@ -13,6 +14,9 @@ export class ArticuleListController {
 
   async showArticules() {
     let articules;
+    const spinnerTemplate = buildArticuleListSpinnerView();
+
+    this.articuleListElement.innerHTML = spinnerTemplate;
 
     try {
       articules = await ArticuleListService.getArticules();
@@ -28,6 +32,10 @@ export class ArticuleListController {
         articuleDivElement.innerHTML = articuleTemplate;
         this.articuleListElement.appendChild(articuleDivElement);
       }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      const loader = this.articuleListElement.querySelector(".loader");
+      loader.remove();
+    }
   }
 }
