@@ -52,8 +52,11 @@ export class ArticuleDetailController {
   drawDeleteButton() {
     const buttonElement = document.createElement("button");
     buttonElement.textContent = "Delete Articule";
+    buttonElement.classList = "btn btn-secondary";
 
-    this.articuleDetailElement.appendChild(buttonElement);
+    this.articuleDetailElement
+      .querySelector(".card-footer")
+      .appendChild(buttonElement);
 
     buttonElement.addEventListener("click", () => {
       this.deleteArticule();

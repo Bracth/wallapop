@@ -20,13 +20,20 @@ export function buildArticuleDetailView(articule) {
   }
 
   const articuleTemplate = `
-        <h1>${articule.product}</h1>
-        <img src=${articule.image} alt=${articule.product}>
-        <p>${isSelling}</p>
-        <p>I am the user ${articule.userId}</p>
-        <p>${articule.description}</p>
-        <p>${articule.price}</p>
-        <span>${currentTime}</span>
+       <div class="col">
+                    <div class="card h-100">
+                        <img src=${articule.image} class="card-img-top" alt=${articule.product}>
+                        <div class="card-body">
+                            <h5 class="card-title">${articule.product}</h5>
+                            <p class="card-text">${isSelling}</p>
+                            <p class="card-text">${articule.description}</p>
+                            <p class="card-text">${articule.price}$</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Created: ${currentTime}</small>
+                        </div>
+                    </div>
+                </div>
         `;
 
   return articuleTemplate;

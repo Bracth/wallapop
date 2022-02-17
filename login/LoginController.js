@@ -1,9 +1,11 @@
+import { buildArticuleListSpinnerView } from "../articule-list/ArticuleListView.js";
 import { pubSub } from "../shared/pubSub.js";
 import { signupService } from "../signup/SignupService.js";
 
 export class LoginController {
   constructor(loginFormElement) {
     this.loginFormElement = loginFormElement;
+    this.loginFormElementHtml = loginFormElement.innerHTML;
 
     this.attachEvents();
   }
@@ -43,6 +45,9 @@ export class LoginController {
 
       const formData = new FormData(this.loginFormElement);
 
+      const spinnerTemplate = buildArticuleListSpinnerView();
+      this.loginFormElement.innerHTML = spinnerTemplate;
+
       const username = formData.get("user");
       const password = formData.get("password");
 
@@ -56,6 +61,7 @@ export class LoginController {
       window.location.href = "/";
     } catch (error) {
       pubSub.publish(pubSub.TOPICS.SHOW_ERROR_NOTIFICATION, error);
+    } finally {
     }
   }
 }
