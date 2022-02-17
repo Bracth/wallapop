@@ -1,5 +1,6 @@
 import ArticuleListService from "../articule-list/ArticuleListService.js";
 import { pubSub } from "../shared/pubSub.js";
+import { buildArticuleListSpinnerView } from "../articule-list/ArticuleListView.js";
 
 export class CreatingArticuleController {
   constructor(creatingArticuleFormElement) {
@@ -81,6 +82,9 @@ export class CreatingArticuleController {
         price,
       };
 
+      const spinnerElement = buildArticuleListSpinnerView();
+
+      this.creatingArticuleFormElement.appendChild(spinnerElement);
       this.createArticule(articuleBody);
     });
   }
@@ -91,6 +95,9 @@ export class CreatingArticuleController {
       window.location.href = "/";
     } catch (error) {
       pubSub.publish(pubSub.TOPICS.SHOW_ERROR_NOTIFICATION, error);
+    } finally {
+      const loader = this.creatingArticuleFormElement.querySelector(".loader");
+      loader.remove();
     }
   }
 

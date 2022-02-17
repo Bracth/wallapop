@@ -1,7 +1,12 @@
+"use strict";
+
 import { pubSub } from "../shared/pubSub.js";
 import { signupService } from "../signup/SignupService.js";
 import ArticuleListService from "../articule-list/ArticuleListService.js";
-import { buildArticuleDetailView } from "../articule-list/ArticuleListView.js";
+import {
+  buildArticuleDetailView,
+  buildArticuleListSpinnerView,
+} from "../articule-list/ArticuleListView.js";
 import { decodeToken } from "../utils/decodeToken.js";
 
 export class ArticuleDetailController {
@@ -20,6 +25,10 @@ export class ArticuleDetailController {
       return;
     }
 
+    const spinnerElement = buildArticuleListSpinnerView();
+
+    this.articuleDetailElement.appendChild(spinnerElement);
+
     try {
       this.articule = await ArticuleListService.getArticule(articuleId);
       const articuleTemplate = buildArticuleDetailView(this.articule);
@@ -28,6 +37,12 @@ export class ArticuleDetailController {
       this.handleDeleteButton();
     } catch (error) {
       pubSub.publish(pubSub.TOPICS.SHOW_ERROR_NOTIFICATION, error);
+    } finally {
+      const loader = this.articuleDetailElement.querySelector(".loader");
+
+      if (loader) {
+        loader.remove();
+      }
     }
   }
 

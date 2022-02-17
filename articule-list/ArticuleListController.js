@@ -16,9 +16,9 @@ export class ArticuleListController {
 
   async showArticules() {
     let articules;
-    const spinnerTemplate = buildArticuleListSpinnerView();
+    const spinnerElement = buildArticuleListSpinnerView();
 
-    this.articuleListElement.innerHTML = spinnerTemplate;
+    this.articuleListElement.appendChild(spinnerElement);
 
     try {
       articules = await ArticuleListService.getArticules();

@@ -59,7 +59,6 @@ export class NavbarController {
       const navItemElement = this.drawLogoutButton();
 
       navbarNavElement.appendChild(navItemElement);
-      console.log(navbarNavElement);
     }
   }
 

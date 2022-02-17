@@ -40,12 +40,16 @@ export function buildArticuleDetailView(articule) {
 }
 
 export function buildArticuleListSpinnerView() {
-  return `<div class="loader">
+  const divElement = document.createElement("div");
+  divElement.classList.add("loader");
+  divElement.innerHTML = `
     <div></div>
     <div></div>
     <div></div>
     <div></div>
-  </div>`;
+  `;
+
+  return divElement;
 }
 
 export function buildNotFoundArticulesView() {

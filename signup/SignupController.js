@@ -1,5 +1,6 @@
 import { pubSub } from "../shared/pubSub.js";
 import { signupService } from "./SignupService.js";
+import { buildArticuleListSpinnerView } from "../articule-list/ArticuleListView.js";
 
 export class SignupController {
   constructor(formElement) {
@@ -70,6 +71,10 @@ export class SignupController {
         return;
       }
 
+      const spinnerElement = buildArticuleListSpinnerView();
+
+      this.formElement.appendChild(spinnerElement);
+
       this.createUser(username, passwordInput);
     });
   }
@@ -90,6 +95,9 @@ export class SignupController {
       this.loginUser(username, passwordInput);
     } catch (error) {
       pubSub.publish(pubSub.TOPICS.SHOW_ERROR_NOTIFICATION, error);
+    } finally {
+      const loader = this.formElement.querySelector(".loader");
+      loader.remove();
     }
   }
 

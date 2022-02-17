@@ -42,11 +42,10 @@ export class LoginController {
   onSubmitLoginForm() {
     this.loginFormElement.addEventListener("submit", (event) => {
       event.preventDefault();
+      const spinnerElement = buildArticuleListSpinnerView();
+      this.loginFormElement.appendChild(spinnerElement);
 
       const formData = new FormData(this.loginFormElement);
-
-      const spinnerTemplate = buildArticuleListSpinnerView();
-      this.loginFormElement.innerHTML = spinnerTemplate;
 
       const username = formData.get("user");
       const password = formData.get("password");
@@ -62,6 +61,8 @@ export class LoginController {
     } catch (error) {
       pubSub.publish(pubSub.TOPICS.SHOW_ERROR_NOTIFICATION, error);
     } finally {
+      const loader = this.loginFormElement.querySelector(".loader");
+      loader.remove();
     }
   }
 }
