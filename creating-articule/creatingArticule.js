@@ -5,6 +5,7 @@ import { signupService } from "../signup/SignupService.js";
 const loggedUserToken = signupService.getLoggedUser();
 
 if (!loggedUserToken) {
+  window.alert("You have to be logged in to create an articule");
   location.href = "/";
 }
 
