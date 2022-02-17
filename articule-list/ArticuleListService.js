@@ -78,6 +78,27 @@ export default {
     }
   },
 
+  async createArticule(articuleBody) {
+    let response;
+
+    try {
+      response = await fetch("http://localhost:8000/api/articules", {
+        method: "POST",
+        body: JSON.stringify(articuleBody),
+        headers: {
+          Authorization: "Bearer " + signupService.getLoggedUser(),
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      throw new Error("I was unable to create the articule");
+    }
+
+    if (!response.ok) {
+      throw new Error("The articule was not create");
+    }
+  },
+
   transformArticules(articules) {
     return articules.map((articule) => {
       const transformedArticule = {
@@ -85,8 +106,10 @@ export default {
         userId: articule.userId,
         id: articule.id,
         date: articule.updatedAt,
-        isSelling: articule.sell,
+        isSelling: articule.isSelling,
+        price: articule.price,
         image:
+          articule.image ||
           "https://decoratedi.com/11913-thickbox_default/carro-de-compra-para-supermercado-150-litros.jpg",
         description:
           "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, placeat odit, quae recusandae inventore nemo ratione odio deserunt repellat neque molestias eum nam omnis repudiandae id. Aperiam porro iure harum.",
