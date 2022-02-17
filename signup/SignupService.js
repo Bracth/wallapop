@@ -50,6 +50,10 @@ class SignupService {
   getLoggedUser() {
     return localStorage.getItem("jwt") || null;
   }
+
+  logoutUser() {
+    localStorage.removeItem("jwt");
+  }
 }
 
 export const signupService = new SignupService();
