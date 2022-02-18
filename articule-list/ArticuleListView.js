@@ -57,3 +57,31 @@ export function buildNotFoundArticulesView() {
     <h1>Ooops!!! no hay ningún tweet!!! =(</h1>
   `;
 }
+
+export function buildEditFormArticule() {
+  return `
+    <form class="container mt-3">
+            <div class="mb-3">
+                <label for="product" class="form-label">Product: </label>
+                <input type="text" class="form-control" name="product" id="product" required>
+            </div>
+            <div class="mb-3">
+                <label for="imageUrl" class="form-label">Image URL: </label>
+                <input type="text" class="form-control" name="imageUrl" id="imageUrl">
+            </div>
+            <div class="mb-3 form-check">
+                <label for="isSelling" class="form-check-label">Are you selling the product? </label>
+                <input type="checkbox" class="form-check-input" name="isSelling" id="isSelling">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description: </label>
+                <input type="text" class="form-control" name="description" id="description" required>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price: </label>
+                <input type="number" class="form-control" name="price" id="number" required>
+            </div>
+            <button type="submit" class="btn btn-primary" disabled>Submit</button>
+        </form>
+  `;
+}

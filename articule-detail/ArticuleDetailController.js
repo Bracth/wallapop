@@ -6,6 +6,7 @@ import ArticuleListService from "../articule-list/ArticuleListService.js";
 import {
   buildArticuleDetailView,
   buildArticuleListSpinnerView,
+  buildEditFormArticule,
 } from "../articule-list/ArticuleListView.js";
 import { decodeToken } from "../utils/decodeToken.js";
 
@@ -35,6 +36,7 @@ export class ArticuleDetailController {
       this.articuleDetailElement.innerHTML = articuleTemplate;
 
       this.handleDeleteButton();
+      this.handleEditButton();
     } catch (error) {
       pubSub.publish(pubSub.TOPICS.SHOW_ERROR_NOTIFICATION, error);
     } finally {
@@ -60,6 +62,20 @@ export class ArticuleDetailController {
     }
   }
 
+  handleEditButton() {
+    const loggedUserToken = signupService.getLoggedUser();
+
+    if (loggedUserToken) {
+      const userInfo = decodeToken(loggedUserToken);
+
+      const isOwner = this.isArticuleOwner(userInfo.userId);
+
+      if (isOwner) {
+        this.drawEditButton();
+      }
+    }
+  }
+
   isArticuleOwner(userId) {
     return userId === this.articule.userId;
   }
@@ -67,7 +83,7 @@ export class ArticuleDetailController {
   drawDeleteButton() {
     const buttonElement = document.createElement("button");
     buttonElement.textContent = "Delete Articule";
-    buttonElement.classList = "btn btn-secondary";
+    buttonElement.classList = "btn btn-danger";
 
     this.articuleDetailElement
       .querySelector(".card-footer")
@@ -75,6 +91,21 @@ export class ArticuleDetailController {
 
     buttonElement.addEventListener("click", () => {
       this.deleteArticule();
+    });
+  }
+
+  drawEditButton() {
+    const buttonElement = document.createElement("button");
+    buttonElement.textContent = "Editing Articule";
+    buttonElement.classList = "btn btn-warning";
+
+    this.articuleDetailElement
+      .querySelector(".card-footer")
+      .appendChild(buttonElement);
+
+    buttonElement.addEventListener("click", () => {
+      const editFormTemplate = buildEditFormArticule();
+      this.articuleDetailElement.innerHTML = editFormTemplate;
     });
   }
 

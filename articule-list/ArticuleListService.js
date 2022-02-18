@@ -112,6 +112,7 @@ export default {
           articule.image ||
           "https://decoratedi.com/11913-thickbox_default/carro-de-compra-para-supermercado-150-litros.jpg",
         description:
+          articule.description ||
           "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, placeat odit, quae recusandae inventore nemo ratione odio deserunt repellat neque molestias eum nam omnis repudiandae id. Aperiam porro iure harum.",
       };
 
