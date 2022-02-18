@@ -10,18 +10,33 @@ import {
 export class ArticuleListController {
   articuleListElement = null;
 
-  constructor(articuleListElement) {
+  constructor(articuleListElement, searchFormElement) {
     this.articuleListElement = articuleListElement;
+    this.articuleListElementHtml = articuleListElement.innerHTML;
+
+    this.searchFormElement = searchFormElement;
+    this.subscribteToSearchSubmit();
   }
 
-  async showArticules() {
+  subscribteToSearchSubmit() {
+    this.searchFormElement.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const formData = new FormData(this.searchFormElement);
+
+      const searchQuery = formData.get("search");
+      this.articuleListElement.innerHTML = this.articuleListElementBaseHtml;
+      this.showArticules(searchQuery);
+    });
+  }
+
+  async showArticules(searchQuery) {
     let articules;
     const spinnerElement = buildArticuleListSpinnerView();
 
     this.articuleListElement.appendChild(spinnerElement);
 
     try {
-      articules = await ArticuleListService.getArticules();
+      articules = await ArticuleListService.getArticules(searchQuery);
 
       if (articules.length === 0) {
         this.articuleListElement.innerHTML = buildNotFoundArticulesView();

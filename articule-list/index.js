@@ -6,10 +6,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const notificationElement = document.querySelector(".notification");
 
+  const searchFormElement = document.querySelector("form");
+
   const notificationContoller = new NotificationController(notificationElement);
 
   const articuleListController = new ArticuleListController(
-    articuleListElement
+    articuleListElement,
+    searchFormElement
   );
 
   articuleListController.showArticules();

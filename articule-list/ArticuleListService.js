@@ -1,8 +1,12 @@
 import { signupService } from "../signup/SignupService.js";
 
 export default {
-  async getArticules() {
-    const url = "http://localhost:8000/api/articules";
+  async getArticules(searchQuery) {
+    if (!searchQuery) {
+      searchQuery = "";
+    }
+
+    const url = `http://localhost:8000/api/articules?product_like=^${searchQuery}`;
     const badUrl =
       "https://hds.hel.fi/static/assets/placeholders/image/image-m@3x.png";
 

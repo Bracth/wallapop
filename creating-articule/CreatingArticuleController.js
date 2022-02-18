@@ -3,8 +3,9 @@ import { pubSub } from "../shared/pubSub.js";
 import { buildArticuleListSpinnerView } from "../articule-list/ArticuleListView.js";
 
 export class CreatingArticuleController {
-  constructor(creatingArticuleFormElement) {
+  constructor(creatingArticuleFormElement, searchFormElement) {
     this.creatingArticuleFormElement = creatingArticuleFormElement;
+    this.searchFormElement = searchFormElement;
 
     this.subscribeToEvents();
   }
