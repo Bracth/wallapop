@@ -99,6 +99,28 @@ export default {
     }
   },
 
+  async editArticule(articuleId, articuleBody) {
+    const url = `http://localhost:8000/api/articules/${articuleId}`;
+    let response;
+
+    try {
+      response = await fetch(url, {
+        method: "PUT",
+        body: JSON.stringify(articuleBody),
+        headers: {
+          Authorization: "Bearer " + signupService.getLoggedUser(),
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      throw new Error("I was unable to edit the articule");
+    }
+
+    if (!response.ok) {
+      throw new Error("Articule not found");
+    }
+  },
+
   transformArticules(articules) {
     return articules.map((articule) => {
       const transformedArticule = {

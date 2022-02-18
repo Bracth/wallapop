@@ -58,30 +58,35 @@ export function buildNotFoundArticulesView() {
   `;
 }
 
-export function buildEditFormArticule() {
+export function buildEditFormArticule(articule) {
+  let checked;
+  if (articule.isSelling) {
+    checked = "checked";
+  }
+
   return `
     <form class="container mt-3">
             <div class="mb-3">
                 <label for="product" class="form-label">Product: </label>
-                <input type="text" class="form-control" name="product" id="product" required>
+                <input type="text" class="form-control" name="product" id="product" required value="${articule.product}">
             </div>
             <div class="mb-3">
                 <label for="imageUrl" class="form-label">Image URL: </label>
-                <input type="text" class="form-control" name="imageUrl" id="imageUrl">
+                <input type="text" class="form-control" name="imageUrl" id="imageUrl" value="${articule.image}">
             </div>
             <div class="mb-3 form-check">
                 <label for="isSelling" class="form-check-label">Are you selling the product? </label>
-                <input type="checkbox" class="form-check-input" name="isSelling" id="isSelling">
+                <input type="checkbox" class="form-check-input" name="isSelling" id="isSelling" ${checked}>
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description: </label>
-                <input type="text" class="form-control" name="description" id="description" required>
+                <input type="text" class="form-control" name="description" id="description" required value="${articule.description}">
             </div>
             <div class="mb-3">
                 <label for="price" class="form-label">Price: </label>
-                <input type="number" class="form-control" name="price" id="number" required>
+                <input type="number" class="form-control" name="price" id="number" required value="${articule.price}">
             </div>
-            <button type="submit" class="btn btn-primary" disabled>Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
   `;
 }

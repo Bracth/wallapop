@@ -14,6 +14,8 @@ export class ArticuleDetailController {
   constructor(articuleDetailElement) {
     this.articuleDetailElement = articuleDetailElement;
     this.articule = null;
+    this.articuleId = null;
+    this.articuleEditFormElement = null;
   }
 
   async showArticule(articuleId) {
@@ -25,6 +27,7 @@ export class ArticuleDetailController {
 
       return;
     }
+    this.articuleId = articuleId;
 
     const spinnerElement = buildArticuleListSpinnerView();
 
@@ -104,8 +107,54 @@ export class ArticuleDetailController {
       .appendChild(buttonElement);
 
     buttonElement.addEventListener("click", () => {
-      const editFormTemplate = buildEditFormArticule();
+      const editFormTemplate = buildEditFormArticule(this.articule);
       this.articuleDetailElement.innerHTML = editFormTemplate;
+
+      this.articuleEditFormElement =
+        this.articuleDetailElement.querySelector("form");
+
+      this.onAnyInputChange();
+
+      this.articuleEditFormElement.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(this.articuleEditFormElement);
+
+        const product = formData.get("product");
+        const image = formData.get("imageUrl");
+        let isSelling = formData.get("isSelling");
+        const description = formData.get("description");
+        const price = parseInt(formData.get("price"));
+
+        if (isSelling === "on") {
+          isSelling = true;
+        } else {
+          isSelling = false;
+        }
+
+        const isPriceMoreThanCero = this.chekIfPriceIsMoreThanCero(price);
+
+        if (!isPriceMoreThanCero) {
+          pubSub.publish(
+            pubSub.TOPICS.SHOW_ERROR_NOTIFICATION,
+            "The price have to be more than cero"
+          );
+          return;
+        }
+
+        const articuleBody = {
+          product,
+          image,
+          isSelling,
+          description,
+          price,
+        };
+
+        const spinnerElement = buildArticuleListSpinnerView();
+
+        this.articuleDetailElement.appendChild(spinnerElement);
+        this.editArticule(articuleBody);
+      });
     });
   }
 
@@ -121,6 +170,53 @@ export class ArticuleDetailController {
       } catch (error) {
         pubSub.publish(pubSub.TOPICS.SHOW_ERROR_NOTIFICATION, error);
       }
+    }
+  }
+
+  chekIfPriceIsMoreThanCero(price) {
+    return price > 0;
+  }
+
+  async editArticule(articuleBody) {
+    try {
+      await ArticuleListService.editArticule(this.articuleId, articuleBody);
+      window.location.href = `/articuleDetail.html?id=${this.articuleId}`;
+    } catch (error) {
+      pubSub.publish(pubSub.TOPICS.SHOW_ERROR_NOTIFICATION, error);
+      const loader = this.articuleDetailElement.querySelector(".loader");
+      loader.remove();
+    }
+  }
+
+  onAnyInputChange(articuleEditFormElement) {
+    const inputElements = Array.from(
+      this.articuleEditFormElement.querySelectorAll("input")
+    );
+
+    const requiredInputElements = inputElements.filter((inputElemnt) => {
+      return inputElemnt.required;
+    });
+
+    requiredInputElements.forEach((requiredInputElement) => {
+      requiredInputElement.addEventListener("input", () => {
+        this.checkIfAllInputsAllFilled(requiredInputElements);
+      });
+    });
+  }
+
+  checkIfAllInputsAllFilled(requiredInputElements) {
+    const areAllInputsFilled = requiredInputElements.every(
+      (requiredInputElement) => requiredInputElement.value
+    );
+
+    if (areAllInputsFilled) {
+      this.articuleEditFormElement
+        .querySelector("button")
+        .removeAttribute("disabled");
+    } else {
+      this.articuleEditFormElement
+        .querySelector("button")
+        .setAttribute("disabled", "");
     }
   }
 }
