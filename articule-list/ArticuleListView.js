@@ -67,7 +67,7 @@ export function buildEditFormArticule(articule) {
   return `
     <form class="container mt-3">
             <div class="mb-3">
-                <label for="product" class="form-label">Product: </label>
+                <label for="product" class="form-label">*Product: </label>
                 <input type="text" class="form-control" name="product" id="product" required value="${articule.product}">
             </div>
             <div class="mb-3">
@@ -79,11 +79,11 @@ export function buildEditFormArticule(articule) {
                 <input type="checkbox" class="form-check-input" name="isSelling" id="isSelling" ${checked}>
             </div>
             <div class="mb-3">
-                <label for="description" class="form-label">Description: </label>
+                <label for="description" class="form-label">*Description: </label>
                 <input type="text" class="form-control" name="description" id="description" required value="${articule.description}">
             </div>
             <div class="mb-3">
-                <label for="price" class="form-label">Price: </label>
+                <label for="price" class="form-label">*Price: </label>
                 <input type="number" class="form-control" name="price" id="number" required value="${articule.price}">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>

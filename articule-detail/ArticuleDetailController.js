@@ -142,6 +142,18 @@ export class ArticuleDetailController {
           return;
         }
 
+        if (image) {
+          const isValidImageUrl = this.checkUrl(image);
+
+          if (!isValidImageUrl) {
+            pubSub.publish(
+              pubSub.TOPICS.SHOW_ERROR_NOTIFICATION,
+              "The image url is not valid"
+            );
+            return;
+          }
+        }
+
         const articuleBody = {
           product,
           image,
@@ -218,5 +230,19 @@ export class ArticuleDetailController {
         .querySelector("button")
         .setAttribute("disabled", "");
     }
+  }
+
+  checkUrl(url) {
+    const pattern = new RegExp(
+      "^(https?:\\/\\/)?" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\#[-a-z\\d_]*)?$",
+      "i"
+    ); // fragment locator
+
+    return pattern.test(url);
   }
 }
