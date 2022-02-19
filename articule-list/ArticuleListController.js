@@ -12,7 +12,6 @@ export class ArticuleListController {
 
   constructor(articuleListElement, searchFormElement) {
     this.articuleListElement = articuleListElement;
-    this.articuleListElementHtml = articuleListElement.innerHTML;
 
     this.searchFormElement = searchFormElement;
     this.subscribteToSearchSubmit();
@@ -24,7 +23,7 @@ export class ArticuleListController {
       const formData = new FormData(this.searchFormElement);
 
       const searchQuery = formData.get("search");
-      this.articuleListElement.innerHTML = this.articuleListElementBaseHtml;
+      this.articuleListElement.innerHTML = "";
       this.showArticules(searchQuery);
     });
   }
