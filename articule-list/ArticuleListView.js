@@ -54,7 +54,7 @@ export function buildArticuleListSpinnerView() {
 
 export function buildNotFoundArticulesView() {
   return `
-    <h1>Ooops!!! no hay ningún tweet!!! =(</h1>
+    <h1>Ooops!!! there aren't any articles =(</h1>
   `;
 }
 
